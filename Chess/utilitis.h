@@ -30,7 +30,7 @@ public:
 	}
 	Move operator[](int i){
 		if(i>=s){
-			std::cout<<"Array Index out of Bound"<<endl;
+			std::cout<<"Array Index out of Bound"<<std::endl;
 			exit(1);
 		}
 		return moves[i];
@@ -48,13 +48,13 @@ inline bool inboard(int i,int j){
 	return true;
 }
 void display(char board[9][9]){
-	cout<<"\n\n\n";
+	std::cout<<"\n\n\n";
 	for(int i=0;i<=8;i++){
-		cout<<"         ";
+		std::cout<<"         ";
 		for(int j=0;j<=8;j++){
-			cout<<board[i][j]<<" ";
+			std::cout<<board[i][j]<<" ";
 		}
-		cout<<endl;
+		std::cout<<std::endl;
 	}
 }
 inline bool opp(char  q,char p){	
@@ -74,13 +74,13 @@ inline bool sameside(char q,char p){
 void promote(char board[9][9],int j,int t){
 	char str[]="#QRBN";
 	int c=5;
-	cout<<"Promote to :---"<<endl;
-	cout<<"1 for Queen"<<endl;
-	cout<<"2 for Rook "<<endl;
-	cout<<"3 for Bishop"<<endl;
-	cout<<"4 for Knight"<<endl;
+	std::cout<<"Promote to :---"<<std::endl;
+	std::cout<<"1 for Queen"<<std::endl;
+	std::cout<<"2 for Rook "<<std::endl;
+	std::cout<<"3 for Bishop"<<std::endl;
+	std::cout<<"4 for Knight"<<std::endl;
 	do{
-		cout<<"Your Choice : ";
+		std::cout<<"Your Choice : ";
 		scanf("%d",&c);
 		fflush(stdin);
 	}while(c<=0||c>4);

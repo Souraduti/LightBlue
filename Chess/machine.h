@@ -6,8 +6,8 @@
    Computer can not play En-passant,Castling and unaware of draw by Repition
    
 ***/
-const int MAXDEPTH = 4;
-const int INF = 10000000;
+#define MAXDEPTH 4
+#define INF 10000000
 string lastmove = "";
 double evaluation(char board[9][9],int t,int depth,double alpha,double beta){
 	
