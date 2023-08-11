@@ -140,14 +140,14 @@ double activity(char board[9][9]){
 		for(int j=1;j<=8;j++){
 			char p=board[i][j];
 			switch(p){	
-				//case 'K':e+=Kingmap[i-1][j-1]*10;break;
+				case 'K':e+=Kingmap[i-1][j-1]*10;break;
 				case 'Q':e+=Queenmap[i-1][j-1]*3;break;
 				case 'R':e+=Rookmap[i-1][j-1]*7;break;
 				case 'B':e+=Bishopmap[i-1][j-1]*8;break;
 				case 'N':e+=Nightmap[i-1][j-1]*10;break;
 				case 'P':e+=Pawnmap[i-1][j-1]*7;break;
 				
-				//case 'k':e-=Kingmap[8-i][j-1]*10;break;
+				case 'k':e-=Kingmap[8-i][j-1]*10;break;
 				case 'q':e-=Queenmap[8-i][j-1]*3;break;
 				case 'r':e-=Rookmap[8-i][j-1]*7;break;
 				case 'b':e-=Bishopmap[8-i][j-1]*8;break;
@@ -162,8 +162,8 @@ double staticEvaluation(char  board[9][9]){
 	s++;	
 	return 5*material(board)+2*activity(board)+pawnStructure(board);	
 }
-void serchedPosition(){
+/*void serchedPosition(){
 	cout<<s;
-}
+}*/
 
 

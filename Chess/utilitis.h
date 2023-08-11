@@ -15,7 +15,7 @@ class Movelist{
 	int s;
 public:
 	Movelist(){
-		moves = new Move[100];
+		moves = (Move *)malloc(sizeof(Move)*100);
 		s=0;
 	}
 	void push_back(const Move & m){
@@ -36,7 +36,7 @@ public:
 		return moves[i];
 	}
 	void clear(){
-		delete [] moves;
+		free(moves);
 		s=0;
 	}
 };
@@ -140,7 +140,7 @@ int getPieceValue(char p){
 		default :return 0;
 	}
 }
-string getPieceName(char p){
+std::string getPieceName(char p){
 	switch(p){
 		case 'k':
 		case 'K':return "King";

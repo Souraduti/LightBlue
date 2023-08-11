@@ -317,7 +317,7 @@ void generate(char board[9][9],int t,Movelist & all){
 		}
 	}
 }
-bool isGameEnded(char board [9][9]){
+bool isGameEnded(char board [9][9],int t){
 	if(checkmate(board,1)){
 	  cout<<"Black Won"<<endl;
 	  return true;	
@@ -326,7 +326,7 @@ bool isGameEnded(char board [9][9]){
 	  cout<<"White Won"<<endl;
 	  return true;	
 	}
-	if(stalemate(board,1)||stalemate(board,-1)){
+	if(stalemate(board,t)){
 		cout<<"Draw By Stalemate";
 		return true;
 	}	

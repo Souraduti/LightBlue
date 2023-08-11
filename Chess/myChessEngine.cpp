@@ -3,6 +3,7 @@
 #include<stdlib.h>
 #include<time.h>
 
+
 #include "utilitis.h"
 #include "Evaluation.h"
 #include "moves.h"
@@ -38,11 +39,13 @@ int main(){
 	
 	set(board);
 	display(board);
-	while(c!=0&&!isGameEnded(board)){
+	while(c!=0){
+		if(isGameEnded(board,1)) break;
 		while(!usermove(board,1));
 		//computer(board,1);
 		system("cls");
 		display(board);
+		if(isGameEnded(board,-1)) break;
 		computer(board,-1);
 		system("cls");
 		display(board);
