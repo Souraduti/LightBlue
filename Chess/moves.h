@@ -5,6 +5,8 @@
  player colour
  
 ***/
+
+///// Git 
 const int offset[8][2]={{0,1},{0,-1},{1,0,},{-1,0},{1,1},{1,-1},{-1,1},{-1,-1}};
 const int knoffset[8][2]={{2,1},{2,-1},{-2,1},{-2,-1},{1,2},{1,-2},{-1,2},{-1,-2}};
 bool castling_flags[6] = {true,true,true,true,true,true};
@@ -107,17 +109,26 @@ void pawn(char board[9][9],char p,square & s,Movelist & v){
 	int t;
 	Move m;
 	m.source=s;
-	int k,home;
+	int k,home,last;
 	if(p=='p'){
-		k=1;home=2;t=0;
+		k=1;home=2;t=0,last=8;
 	}else{
-		k=-1;home=7;t=1;
+		k=-1;home=7;t=1,last=1;
 	}
 		
 	if(board[s.rank+k][s.file]=='.'){    
 		m.dest.rank=s.rank+k;m.dest.file=s.file;
 		if(isplayable(board,m,t)){
 			v.push_back(m);
+			if(m.dest.rank==last){
+				v.pop_back();
+				Move m1;
+				m1=m;
+				m1.prm='q'-t*32;v.push_back(m1);
+				m1.prm='r'-t*32;v.push_back(m1);
+				m1.prm='b'-t*32;v.push_back(m1);
+				m1.prm='n'-t*32;v.push_back(m1);
+			}
 		}
 	}
 		
@@ -132,6 +143,15 @@ void pawn(char board[9][9],char p,square & s,Movelist & v){
 		m.dest.rank=s.rank+k;m.dest.file=s.file+1;
 		if(isplayable(board,m,t)){
 			v.push_back(m);
+			if(m.dest.rank==last){
+				v.pop_back();
+				Move m1;
+				m1=m;
+				m1.prm='q'-t*32;v.push_back(m1);
+				m1.prm='r'-t*32;v.push_back(m1);
+				m1.prm='b'-t*32;v.push_back(m1);
+				m1.prm='n'-t*32;v.push_back(m1);
+			}
 		}
 	}	
 		
@@ -139,6 +159,15 @@ void pawn(char board[9][9],char p,square & s,Movelist & v){
 		m.dest.rank=s.rank+k;m.dest.file=s.file-1;
 		if(isplayable(board,m,t)){
 			v.push_back(m);
+			if(m.dest.rank==last){
+				v.pop_back();
+				Move m1;
+				m1=m;
+				m1.prm='q'-t*32;v.push_back(m1);
+				m1.prm='r'-t*32;v.push_back(m1);
+				m1.prm='b'-t*32;v.push_back(m1);
+				m1.prm='n'-t*32;v.push_back(m1);
+			}
 		}
 	}	
 }
@@ -331,4 +360,22 @@ bool isGameEnded(char board [9][9],int t){
 		return true;
 	}	
 	return false;
+}
+void redo(char board [9][9],const Move & m){
+	
+	board[m.dest.rank][m.dest.file] = board[m.source.rank][m.source.file];
+	board[m.source.rank][m.source.file] = '.';
+	if(m.prm!='.'){
+		board[m.dest.rank][m.dest.file] = m.prm;
+	}
+}
+void undo(char board [9][9],const Move & m,char capt){
+	
+	board[m.source.rank][m.source.file] = board[m.dest.rank][m.dest.file];
+	board[m.dest.rank][m.dest.file] = capt;
+	if(sameside(m.prm,'K')){
+		board[m.source.rank][m.source.file] = 'P';
+	}else if(sameside(m.prm,'k')){
+		board[m.source.rank][m.source.file] = 'p';
+	}
 }

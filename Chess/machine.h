@@ -7,14 +7,14 @@
    
 ***/
 #define MAXDEPTH 4
-#define INF 10000000
+#define INF 1000000
 string lastmove = "";
 double evaluation(char board[9][9],int t,int depth,double alpha,double beta){
 	
 	if(depth==0){
 		return  staticEvaluation(board);
 	}
-	if(checkmate(board,t)) return -t*INF;
+	if(checkmate(board,t)) return -t*(INF+depth*1000);
 	if(stalemate(board,t)) return 0;	
 	
 	double eval,maxi=-INF,mini=INF;
@@ -27,13 +27,11 @@ double evaluation(char board[9][9],int t,int depth,double alpha,double beta){
 	for(int i=0;i<all.size();i++){
 		
 		char was = board[all[i].dest.rank][all[i].dest.file];
-		board[all[i].dest.rank][all[i].dest.file] =board[all[i].source.rank][all[i].source.file];
-		board[all[i].source.rank][all[i].source.file] = '.';
+		redo(board,all[i]);
 		
 		double eval = evaluation(board,-t,depth-1,alpha,beta);
 		
-		board[all[i].source.rank][all[i].source.file] = board[all[i].dest.rank][all[i].dest.file];
-		board[all[i].dest.rank][all[i].dest.file] = was;
+		undo(board,all[i],was);
 			
 		if(t==1){
 			maxi=max(eval,maxi);
@@ -64,13 +62,11 @@ void computer(char board[9][9],int t){
 			
 	for(int i=0;i<all.size();i++){
 		char was= board[all[i].dest.rank][all[i].dest.file];
-		board[all[i].dest.rank][all[i].dest.file] = board[all[i].source.rank][all[i].source.file];
-		board[all[i].source.rank][all[i].source.file] = '.';
+		redo(board,all[i]);
 		
 		double eval=evaluation(board,-t,MAXDEPTH,-INF,INF);
 		
-		board[all[i].source.rank][all[i].source.file] = board[all[i].dest.rank][all[i].dest.file];
-		board[all[i].dest.rank][all[i].dest.file] = was;
+		undo(board,all[i],was);
 	
 		if(t==1&&eval>maxi){
 			index=i;
@@ -90,17 +86,9 @@ void computer(char board[9][9],int t){
 	lastmove+=char(48+all[index].dest.rank);
 	lastmove+=",";
 	lastmove+=char(48+all[index].dest.file);
+	lastmove+="\n";
 	
-	board[all[index].dest.rank][all[index].dest.file]=board[all[index].source.rank][all[index].source.file];
-	board[all[index].source.rank][all[index].source.file] = '.';
-	
-	// Auto promoting to Queen
-	if(board[all[index].dest.rank][all[index].dest.file]=='p'&&all[index].dest.rank==8){
-		board[all[index].dest.rank][all[index].dest.file]='q';
-	}
-	if(board[all[index].dest.rank][all[index].dest.file]=='P'&&all[index].dest.rank==1){
-		board[all[index].dest.rank][all[index].dest.file]='Q';
-	}
+	redo(board,all[index]);
 	all.clear();
 	return ;	
 }

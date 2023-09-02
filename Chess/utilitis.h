@@ -1,21 +1,25 @@
 using namespace std;
 struct square{
-	int file,rank;
+	short file,rank;
 	square(){}
-	square(int i,int j){
+	square(short i,int j){
 		rank=i;
 		file=j;
 	}
 };
 struct Move{
 	square source,dest;
+	char prm;
+	Move(){
+		prm = '.';
+	}
 };
 class Movelist{
 	Move * moves;
 	int s;
 public:
 	Movelist(){
-		moves = (Move *)malloc(sizeof(Move)*100);
+		moves = (Move *)malloc(sizeof(Move)*80);
 		s=0;
 	}
 	void push_back(const Move & m){

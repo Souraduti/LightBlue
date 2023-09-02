@@ -59,6 +59,7 @@ int main(){
 		c--;
 	}
 	display(board);
+	getchar();
 	return 0;
 }
 

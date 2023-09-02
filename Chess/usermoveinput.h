@@ -60,7 +60,6 @@ bool usermove(char board[9][9],int t){
 	
 	cout<<"to   :";
 	cin>>m.dest.rank>>m.dest.file;
-	fflush(stdin);
 	
 	if(!inboard(m.source.rank,m.source.file)||board[m.source.rank][m.source.file]!=p){
 		cout<<"Invalid Move"<<endl;
