@@ -69,8 +69,8 @@ inline int min(int i ,int j){
 	return i<j?i:j;
 }
 
-double W_material(char board[9][9]){
-	double e=0;
+int W_material(char board[9][9]){
+	int e=0;
 	for(int i = 1;i<=8;i++){
 		for(int j=1;j<=8;j++){
 			char p = board[i][j];
@@ -85,8 +85,8 @@ double W_material(char board[9][9]){
 	}
 	return e;	
 }
-double B_material(char board[9][9]){
-	double e=0;
+int B_material(char board[9][9]){
+	int e=0;
 	for(int i = 1;i<=8;i++){
 		for(int j=1;j<=8;j++){
 			char p = board[i][j];
@@ -101,16 +101,16 @@ double B_material(char board[9][9]){
 	}
 	return e;	
 }
-double material(char board[9][9]){
+int material(char board[9][9]){
 	return W_material(board)+B_material(board);
 }
-double total_material(char board[9][9]){
+int total_material(char board[9][9]){
 	return W_material(board)-B_material(board);
 }
 
-double pawnStructure(char  board[9][9]){
+/*int pawnStructure(char  board[9][9]){
 	
-	double e=0;
+	int e=0;
 	for(int i=1;i<=8;i++ ){
 		for(int j=1;j<=8;j++){
 			if(board[i][j]=='P'){
@@ -134,10 +134,11 @@ double pawnStructure(char  board[9][9]){
 	if(c1>0) e-=(c1-1)*20;
 	if(c2>0) e+=(c2-1)*20;
 	return e;
-}
-double activity(char board[9][9],double total){
+}*/
+int activity(char board[9][9]){
 	
-	double e=0;		
+	int e=0;
+	int total = total_material(board);		
 	for(int i=1;i<=8;i++){
 		for(int j=1;j<=8;j++){
 			char p=board[i][j];
@@ -172,8 +173,8 @@ double activity(char board[9][9],double total){
 	}
 	return e;
 }
-double staticEvaluation(char  board[9][9]){	
-	return 5*material(board)+2*activity(board,total_material(board))+pawnStructure(board);	
+int staticEvaluation(char  board[9][9]){	
+	return 10*material(board)+2*activity(board);	
 }
 
 

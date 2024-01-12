@@ -10,6 +10,7 @@
 bool usermove(char board[9][9],int t){
 	char p;
 	char pieces[] = "KQNRBPx";
+	string from,to;
 	Move m;	
 	Movelist v;
 	if(check(board,t)){
@@ -56,10 +57,16 @@ bool usermove(char board[9][9],int t){
 		p-=32;
 		
 	cout<<"from :";
-	cin>>m.source.rank>>m.source.file;
+	cin>>from;
+	m.source.rank = '9'-from[1];
+	m.source.file = from[0]-'a'+1;
+	//cin>>m.source.rank>>m.source.file;
 	
 	cout<<"to   :";
-	cin>>m.dest.rank>>m.dest.file;
+	cin>>to;
+	m.dest.rank = '9'-to[1];
+	m.dest.file = to[0]-'a'+1;
+	//cin>>m.dest.rank>>m.dest.file;
 	
 	if(!inboard(m.source.rank,m.source.file)||board[m.source.rank][m.source.file]!=p){
 		cout<<"Invalid Move"<<endl;

@@ -9,7 +9,7 @@
 #define MAXDEPTH 4
 #define INF 1000000
 string lastmove = "";
-double evaluation(char board[9][9],int t,int depth,double alpha,double beta){
+int evaluation(char board[9][9],int t,int depth,int alpha,int beta){
 	
 	if(depth==0){
 		return  staticEvaluation(board);
@@ -17,7 +17,7 @@ double evaluation(char board[9][9],int t,int depth,double alpha,double beta){
 	if(checkmate(board,t)) return -t*(INF+depth*1000);
 	if(stalemate(board,t)) return 0;	
 	
-	double eval,maxi=-INF,mini=INF;
+	int eval,maxi=-INF,mini=INF;
 	Movelist all;
 	Move x;
 	char c = (t==1)?'K':'k';
@@ -29,7 +29,7 @@ double evaluation(char board[9][9],int t,int depth,double alpha,double beta){
 		char was = board[all[i].dest.rank][all[i].dest.file];
 		redo(board,all[i]);
 		
-		double eval = evaluation(board,-t,depth-1,alpha,beta);
+		int eval = evaluation(board,-t,depth-1,alpha,beta);
 		
 		undo(board,all[i],was);
 			
@@ -52,7 +52,7 @@ void computer(char board[9][9],int t){
 	char c= (t==1)?'K':'k';
 	Move x;
 	Movelist all;
-	double maxi=-INF,mini = INF;
+	int maxi=-INF,mini = INF;
 	
 	if(checkmate(board,1)||checkmate(board,-1)||stalemate(board,t)){
 	  return ;	
@@ -73,19 +73,17 @@ void computer(char board[9][9],int t){
 			maxi = eval;
 		}else if(t==-1&&eval<mini){
 			index =i;
-			mini =eval;
+			mini = eval;
 		}		
 	}
 	
 	lastmove+= getPieceName(board[all[index].source.rank][all[index].source.file]);
 	lastmove+=" from ";
-	lastmove+=char(48+all[index].source.rank);
-	lastmove+=",";
-	lastmove+=char(48+all[index].source.file);
+	lastmove+=char(all[index].source.file+'a'-1);
+	lastmove+=char('9'-all[index].source.rank);
 	lastmove+=" to ";
-	lastmove+=char(48+all[index].dest.rank);
-	lastmove+=",";
-	lastmove+=char(48+all[index].dest.file);
+	lastmove+=char(all[index].dest.file+'a'-1);
+	lastmove+=char('9'-all[index].dest.rank);
 	lastmove+="\n";
 	
 	redo(board,all[index]);

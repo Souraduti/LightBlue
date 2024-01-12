@@ -13,19 +13,17 @@ using namespace std;
 int main(){
 	int c=1000,choice=0;
 	char board[9][9]={
-					{'.','1','2','3','4','5','6','7','8'},
-					{'1','.','r','b','.','k','b','.','r'},
-					{'2','.','.','.','.','.','p','p','.'},
-					{'3','p','.','.','p','.','.','.','p'},
-					{'4','.','.','.','n','P','R','.','.'},
-					{'5','.','.','.','.','P','.','.','.'},
-					{'6','.','.','.','.','.','.','.','.'},
-					{'7','P','q','P','.','N','.','P','P'},
-					{'8','R','.','.','Q','.','.','.','K'}
+					{'.','a','b','c','d','e','f','g','h'},
+					{'8','.','r','b','.','k','b','.','r'},
+					{'7','.','.','.','.','.','p','p','.'},
+					{'6','p','.','.','p','.','.','.','p'},
+					{'5','.','.','.','n','P','R','.','.'},
+					{'4','.','.','.','.','P','.','.','.'},
+					{'3','.','.','.','.','.','.','.','.'},
+					{'2','P','q','P','.','N','.','P','P'},
+					{'1','R','.','.','Q','.','.','.','K'}
 				};
 		
-	
-	
 	display(board);
 	while(true){
 		cout<<"Play as \n"<<"1.White\n"<<"2.Black\n";
@@ -42,23 +40,26 @@ int main(){
 		if(isGameEnded(board,1)) break;
 		if(choice==1){
 			while(!usermove(board,1));
+			system("cls");
+			display(board);
 		}else{
 			computer(board,1);
+			system("cls");
+			display(board);
 			cout<<"\n"<<getMoveByComputer()<<"\n";
 		}
-		system("cls");
-		display(board);
 		
 		if(isGameEnded(board,-1)) break;
 		if(choice==1){
 			computer(board,-1);
+			system("cls");
+			display(board);
 			cout<<"\n"<<getMoveByComputer()<<"\n";
 		}else{
 			while(!usermove(board,0));
+			system("cls");
+			display(board);
 		}
-		
-		system("cls");
-		display(board);
 		
 		c--;
 	}
@@ -66,28 +67,3 @@ int main(){
 	getchar();
 	return 0;
 }
-
-
-
-
-	
-	
-
-
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-
-
-
